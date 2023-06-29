@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"io"
 	"net/http"
 	"os"
@@ -22,16 +23,18 @@ type Filme struct {
 	Ranking        string `json:"rank"`
 }
 
+var temp = template.Must(template.ParseGlob("templates/*.html"))
+
 func main() {
 	fmt.Println("Bem vinda(o) ao sistema de busca de filmes!")
 
-	var filmes = GetTop250Movies()
-
 	fmt.Println("Iniciando servidor...")
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "%s", filmes)
-	})
+	http.HandleFunc("/", Index)
 	http.ListenAndServe(":8080", nil)
+}
+
+func Index(w http.ResponseWriter, r *http.Request) {
+	temp.ExecuteTemplate(w, "Index", GetTop250Movies())
 }
 
 func GetTop250Movies() []Filme {
