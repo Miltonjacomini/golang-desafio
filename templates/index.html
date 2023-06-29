@@ -1,0 +1,29 @@
+{{define "Index"}}
+{{template "_head"}}
+
+<body>
+  <div class="container">
+    
+    <h1>Lista de Filmes</h1>
+
+    <section id="movies-list" alt="lista de filmes">
+      <div class="row">
+        {{range .}}
+        <div class="col-sm-3 ml-2">
+          <div class="card" style="width: 18rem;">
+            <img src="{{.Imagem}}"  class="card-img-top" style="max-height: 18rem;" alt="Imagem do filme">
+            <div class="card-body">
+              <h5>{{.Titulo}} - {{.Ano}}</h5>
+              <p>Elenco: {{.Elenco}}</p>
+              <p>Nota: {{.Nota}}</p>
+            </div>
+          </div>
+        </div>
+        {{end}}
+      </div>
+    </section>
+  </div>
+</body>
+
+</html>
+{{end}}
